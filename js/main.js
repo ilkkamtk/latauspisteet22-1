@@ -18,10 +18,8 @@ function success(pos) {
 
   map.setView([crd.latitude, crd.longitude], 13);
 
-  L.marker([crd.latitude, crd.longitude]).
-      addTo(map).
-      bindPopup('Olen tässä.').
-      openPopup();
+  const omaPaikka = lisaaMarker(crd, 'Olen tässä');
+  omaPaikka.openPopup();
 
   // hae latauspisteet palauttaa promisen
   haeLatauspisteet(crd).then(function(latauspisteet){
@@ -61,7 +59,7 @@ function haeLatauspisteet(crd) {
 }
 
 function lisaaMarker(crd, teksti) {
-  L.marker([crd.latitude, crd.longitude]).
+  return L.marker([crd.latitude, crd.longitude]).
       addTo(map).
       bindPopup(teksti);
 }
