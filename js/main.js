@@ -32,6 +32,9 @@ function success(pos) {
       const markkeri = lisaaMarker(koordinaatit, teksti);
       markkeri.on('click', function(){
         document.querySelector('#nimi').innerHTML = latauspisteet[i].AddressInfo.Title;
+        document.querySelector('#osoite').innerHTML = latauspisteet[i].AddressInfo.AddressLine1;
+        document.querySelector('#kaupunki').innerHTML = latauspisteet[i].AddressInfo.Town;
+        document.querySelector('#lisatiedot').innerHTML = latauspisteet[i].AddressInfo.AccessComments;
       })
     }
   });
