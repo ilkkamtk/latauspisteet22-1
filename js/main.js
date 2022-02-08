@@ -12,13 +12,17 @@ const options = {
   maximumAge: 0,
 };
 
+// ikonit
+const punainenIkoni = L.divIcon({className: 'punainen-ikoni'});
+const vihreaIkoni = L.divIcon({className: 'vihrea-ikoni'});
+
 // Funktio, joka ajetaan, kun paikkatiedot on haettu
 function success(pos) {
   const crd = pos.coords;
 
   map.setView([crd.latitude, crd.longitude], 13);
 
-  const omaPaikka = lisaaMarker(crd, 'Olen tässä');
+  const omaPaikka = lisaaMarker(crd, 'Olen tässä', punainenIkoni);
   omaPaikka.openPopup();
 
   // hae latauspisteet palauttaa promisen
@@ -29,7 +33,7 @@ function success(pos) {
         latitude: latauspisteet[i].AddressInfo.Latitude,
         longitude: latauspisteet[i].AddressInfo.Longitude,
       };
-      const markkeri = lisaaMarker(koordinaatit, teksti);
+      const markkeri = lisaaMarker(koordinaatit, teksti, vihreaIkoni);
       markkeri.on('click', function(){
         document.querySelector('#nimi').innerHTML = latauspisteet[i].AddressInfo.Title;
         document.querySelector('#osoite').innerHTML = latauspisteet[i].AddressInfo.AddressLine1;
@@ -64,8 +68,8 @@ function haeLatauspisteet(crd) {
       });
 }
 
-function lisaaMarker(crd, teksti) {
-  return L.marker([crd.latitude, crd.longitude]).
+function lisaaMarker(crd, teksti, ikoni) {
+  return L.marker([crd.latitude, crd.longitude], {icon: ikoni}).
       addTo(map).
       bindPopup(teksti);
 }
