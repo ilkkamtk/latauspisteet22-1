@@ -39,6 +39,10 @@ function success(pos) {
         document.querySelector('#osoite').innerHTML = latauspisteet[i].AddressInfo.AddressLine1;
         document.querySelector('#kaupunki').innerHTML = latauspisteet[i].AddressInfo.Town;
         document.querySelector('#lisatiedot').innerHTML = latauspisteet[i].AddressInfo.AccessComments;
+
+        // navigointi
+        const osoite = `https://www.google.com/maps/dir/?api=1&origin=${crd.latitude},${crd.longitude}&destination=${koordinaatit.latitude},${koordinaatit.longitude}&travelmode=driving&dir_action=navigate`;
+        document.querySelector('#navigoi a').href = osoite;
       })
     }
   });
