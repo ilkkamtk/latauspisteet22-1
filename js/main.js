@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 // Käytetään leaflet.js -kirjastoa näyttämään sijainti kartalla (https://leafletjs.com/)
 const map = L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -36,15 +36,21 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 
 function haeLatauspisteet(crd) {
   const key = 'af18334a-87ce-4c57-b805-97ff3685c22d';
-  fetch(
-      `https://api.openchargemap.io/v3/poi?key=${key}&latitude=${crd.latitude}&longitude=${crd.longitude}&distance=10&distanceunit=km`).
+  const proxy = 'https://api.allorigins.win/get?url=';
+  const haku = `https://api.openchargemap.io/v3/poi?key=${key}&latitude=${crd.latitude}&longitude=${crd.longitude}&distance=10&distanceunit=km`;
+  const url = proxy + encodeURIComponent(haku);
+  fetch(url).
       then(function(vastaus) {
         return vastaus.json();
       }).
-      then(function(latauspisteet) {
-        console.log(latauspisteet[0].AddressInfo.Title);
+      then(function(data) {
+        console.log(JSON.parse(data.contents));
+        const latauspisteet = JSON.parse(data.contents);
         const teksti = latauspisteet[0].AddressInfo.Title;
-        const koordinaatit = {latitude: 64, longitude: 24};
+        const koordinaatit = {
+          latitude: latauspisteet[0].AddressInfo.Latitude,
+          longitude: latauspisteet[0].AddressInfo.Longitude,
+        };
         lisaaMarker(koordinaatit, teksti);
       });
 }
