@@ -4,10 +4,30 @@
     <meta charset="UTF-8">
     <title>Latauspisteet</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab&amp;subset=latin-ext"
+          rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-<div id="map"></div>
+<div class="container">
+    <header>
+        <h1>Latauspisteet</h1>
+    </header>
+    <div id="map"></div>
+    <main>
+        <article>
+            <h3 id="nimi"></h3>
+            <div id="navigoi">
+                <div>
+                    <a href="#" target="_blank">Navigoi</a>
+                </div>
+            </div>
+            <h4 id="osoite"></h4>
+            <p id="kaupunki"></p>
+            <p id="lisatiedot"></p>
+        </article>
+    </main>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 <script src="js/main.js"></script>
