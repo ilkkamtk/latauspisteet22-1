@@ -23,7 +23,15 @@ function success(pos) {
       bindPopup('Olen tässä.').
       openPopup();
 
-  haeLatauspisteet(crd);
+  // hae latauspisteet palauttaa promisen
+  haeLatauspisteet(crd).then(function(latauspisteet){
+    const teksti = latauspisteet[0].AddressInfo.Title;
+    const koordinaatit = {
+      latitude: latauspisteet[0].AddressInfo.Latitude,
+      longitude: latauspisteet[0].AddressInfo.Longitude,
+    };
+    lisaaMarker(koordinaatit, teksti);
+  });
 }
 
 // Funktio, joka ajetaan, jos paikkatietojen hakemisessa tapahtuu virhe
@@ -39,19 +47,14 @@ function haeLatauspisteet(crd) {
   const proxy = 'https://api.allorigins.win/get?url=';
   const haku = `https://api.openchargemap.io/v3/poi?key=${key}&latitude=${crd.latitude}&longitude=${crd.longitude}&distance=10&distanceunit=km`;
   const url = proxy + encodeURIComponent(haku);
-  fetch(url).
+  return fetch(url).
       then(function(vastaus) {
         return vastaus.json();
       }).
       then(function(data) {
         console.log(JSON.parse(data.contents));
         const latauspisteet = JSON.parse(data.contents);
-        const teksti = latauspisteet[0].AddressInfo.Title;
-        const koordinaatit = {
-          latitude: latauspisteet[0].AddressInfo.Latitude,
-          longitude: latauspisteet[0].AddressInfo.Longitude,
-        };
-        lisaaMarker(koordinaatit, teksti);
+        return latauspisteet;
       });
 }
 
