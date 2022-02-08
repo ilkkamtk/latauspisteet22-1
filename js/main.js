@@ -29,7 +29,10 @@ function success(pos) {
         latitude: latauspisteet[i].AddressInfo.Latitude,
         longitude: latauspisteet[i].AddressInfo.Longitude,
       };
-      lisaaMarker(koordinaatit, teksti);
+      const markkeri = lisaaMarker(koordinaatit, teksti);
+      markkeri.on('click', function(){
+        document.querySelector('#nimi').innerHTML = latauspisteet[i].AddressInfo.Title;
+      })
     }
   });
 }
