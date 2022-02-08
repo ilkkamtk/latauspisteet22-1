@@ -63,6 +63,5 @@ function haeLatauspisteet(crd) {
 function lisaaMarker(crd, teksti) {
   L.marker([crd.latitude, crd.longitude]).
       addTo(map).
-      bindPopup(teksti).
-      openPopup();
+      bindPopup(teksti);
 }
