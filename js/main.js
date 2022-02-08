@@ -1,4 +1,10 @@
-'use strict';
+'use strict'
+// Käytetään leaflet.js -kirjastoa näyttämään sijainti kartalla (https://leafletjs.com/)
+const map = L.map('map');
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
 // Asetukset paikkatiedon hakua varten (valinnainen)
 const options = {
   enableHighAccuracy: true,
@@ -10,17 +16,7 @@ const options = {
 function success(pos) {
   const crd = pos.coords;
 
-  // Tulostetaan paikkatiedot konsoliin
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
-
-  // Käytetään leaflet.js -kirjastoa näyttämään sijainti kartalla (https://leafletjs.com/)
-  const map = L.map('map').setView([crd.latitude, crd.longitude], 13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
+  map.setView([crd.latitude, crd.longitude], 13);
 
   L.marker([crd.latitude, crd.longitude]).
       addTo(map).
@@ -47,5 +43,15 @@ function haeLatauspisteet(crd) {
       }).
       then(function(latauspisteet) {
         console.log(latauspisteet[0].AddressInfo.Title);
+        const teksti = latauspisteet[0].AddressInfo.Title;
+        const koordinaatit = {latitude: 64, longitude: 24};
+        lisaaMarker(koordinaatit, teksti);
       });
+}
+
+function lisaaMarker(crd, teksti) {
+  L.marker([crd.latitude, crd.longitude]).
+      addTo(map).
+      bindPopup(teksti).
+      openPopup();
 }
