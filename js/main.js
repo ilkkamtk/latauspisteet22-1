@@ -25,12 +25,14 @@ function success(pos) {
 
   // hae latauspisteet palauttaa promisen
   haeLatauspisteet(crd).then(function(latauspisteet){
-    const teksti = latauspisteet[0].AddressInfo.Title;
-    const koordinaatit = {
-      latitude: latauspisteet[0].AddressInfo.Latitude,
-      longitude: latauspisteet[0].AddressInfo.Longitude,
-    };
-    lisaaMarker(koordinaatit, teksti);
+    for(let i = 0; i < latauspisteet.length; i++) {
+      const teksti = latauspisteet[i].AddressInfo.Title;
+      const koordinaatit = {
+        latitude: latauspisteet[i].AddressInfo.Latitude,
+        longitude: latauspisteet[i].AddressInfo.Longitude,
+      };
+      lisaaMarker(koordinaatit, teksti);
+    }
   });
 }
 
